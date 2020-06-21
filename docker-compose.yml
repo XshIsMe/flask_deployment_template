@@ -1,0 +1,23 @@
+version: '3'
+services:
+  flask-app:
+    restart: always
+    image: flask-app
+    build: .
+    container_name: flask-app
+    networks:
+      - webnet
+
+  flask-app-nginx:
+    restart: always
+    image: nginx
+    container_name: flask-app-nginx
+    ports:
+      - "5000:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - webnet
+
+networks:
+  webnet:
